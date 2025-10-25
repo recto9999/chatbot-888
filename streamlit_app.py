@@ -71,6 +71,21 @@ with col3:
             stream=True,
         )
 
+# =========================
+# 🔹 GPT 호출 시 톤 반영
+# =========================
+if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+    # GPT 호출 (톤 적용)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=st.session_state.messages + [
+            {"role": "system", "content": f"Answer in a {tone} tone."}
+        ]
+    )
+    bot_message = response.choices[0].message["content"]
+    st.session_state.messages.append({"role": "assistant", "content": bot_message})
+
+        
         # Stream the response to the chat using `st.write_stream`, then store it in 
         # session state.
         with st.chat_message("assistant"):
