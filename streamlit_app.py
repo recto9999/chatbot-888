@@ -70,29 +70,8 @@ with col3:
             ],
             stream=True,
         )
-st.markdown("### 💬 대화 내역")
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.markdown(f"<div style='background-color:#F0F0F0; padding:10px; border-radius:10px; margin-bottom:5px;'>"
-                    f"🙂 사용자: {msg['content']}</div>", unsafe_allow_html=True)
-    else:
-        style = tone_styles[tone]
-        st.markdown(f"<div style='background-color:{style['color']}; padding:10px; border-radius:10px; margin-bottom:5px;'>"
-                    f"{style['emoji']} 챗봇 ({tone} 톤): {msg['content']}</div>", unsafe_allow_html=True)
-        
-# =========================
-# 🔹 GPT 호출 시 톤 반영
-# =========================
-if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-    # GPT 호출 (톤 적용)
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=st.session_state.messages + [
-            {"role": "system", "content": f"Answer in a {tone} tone."}
-        ]
-    )
-    bot_message = response.choices[0].message["content"]
-    st.session_state.messages.append({"role": "assistant", "content": bot_message})
+
+
 
         
         # Stream the response to the chat using `st.write_stream`, then store it in 
