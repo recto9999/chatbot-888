@@ -25,12 +25,6 @@ else:
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    tone = st.selectbox("챗봇 톤/스타일 선택:", ["정중한", "친근한", "유머러스한"])
-tone_styles = {
-    "정중한": {"color": "#A0C4FF", "emoji": "🎩"},
-    "친근한": {"color": "#B5EAD7", "emoji": "😄"},
-    "유머러스한": {"color": "#FFDAC1", "emoji": "😂"}
-}
 
     # Display the existing chat messages via `st.chat_message`.
     for message in st.session_state.messages:
