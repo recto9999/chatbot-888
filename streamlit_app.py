@@ -59,13 +59,7 @@ if st.button("제출"):
             st.markdown(prompt)
 
 
-if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=st.session_state.messages
-    )
-    bot_message = response.choices[0].message["content"]
-    st.session_state.messages.append({"role": "assistant", "content": bot_message})
+
         
         # Generate a response using the OpenAI API.
         stream = client.chat.completions.create(
