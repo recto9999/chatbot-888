@@ -25,6 +25,27 @@ else:
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+    # 톤 선택 드롭다운
+tone = st.selectbox("💡 챗봇 톤 선택:", ["정중한", "친근한", "유머러스한"])
+tone_styles = {
+    "정중한": {"color": "#A0C4FF", "emoji": "🎩"},
+    "친근한": {"color": "#B5EAD7", "emoji": "😄"},
+    "유머러스한": {"color": "#FFDAC1", "emoji": "😂"}
+}
+
+# 미리 입력 버튼 (빠른 질문 버튼)
+st.markdown("### 🔘 빠른 질문")
+col1, col2, col3 = st.columns(3)
+with col1:
+    if st.button("안녕하세요"):
+        st.session_state.messages.append({"role": "user", "content": "안녕하세요"})
+with col2:
+    if st.button("오늘 날씨 알려줘"):
+        st.session_state.messages.append({"role": "user", "content": "오늘 날씨 알려줘"})
+with col3:
+    if st.button("재밌는 농담 해줘"):
+        st.session_state.messages.append({"role": "user", "content": "재밌는 농담 해줘"})
+
 
     # Display the existing chat messages via `st.chat_message`.
     for message in st.session_state.messages:
