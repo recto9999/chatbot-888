@@ -39,6 +39,26 @@ blood_type = st.selectbox("💡 혈액형 선택:", blood_options)
 if st.button("제출"):
     user_input = f"내 MBTI는 {mbti}이고, 혈액형은 {blood_type}이야."
     st.session_state.messages.append({"role": "user", "content": user_input})
+
+
+    last_msg = st.session_state.custom_messages[-1]
+    if last_msg["role"] == "user":
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=st.session_state.messages + st.session_state.custom_messages
+        )
+        bot_message = response.choices[0].message["content"]
+        st.session_state.custom_messages.append({"role": "assistant", "content": bot_message})
+
+
+    if "custom_messages" in st.session_state and st.session_state.custom_messages:
+    st.markdown("### 💬 MBTI/혈액형 입력 대화")
+    for msg in st.session_state.custom_messages:
+        if msg["role"] == "user":
+            st.markdown(f"**🙂 사용자:** {msg['content']}")
+        else:
+            st.markdown(f"**🤖 챗봇:** {msg['content']}")
+
     
 
     # Display the existing chat messages via `st.chat_message`.
