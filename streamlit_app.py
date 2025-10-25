@@ -22,7 +22,7 @@ else:
 
     # Create a session state variable to store the chat messages. This ensures that the
     # messages persist across reruns.
-    if "messages" not in st.session_state:
+if "messages" not in st.session_state:
         st.session_state.messages = []
 
 mbti_options = ["INTJ", "INTP", "ENTJ", "ENTP",
@@ -42,7 +42,7 @@ if st.button("제출"):
 
 
     last_msg = st.session_state.custom_messages[-1]
-    if last_msg["role"] == "user":
+if last_msg["role"] == "user":
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=st.session_state.messages + st.session_state.custom_messages
