@@ -22,7 +22,7 @@ else:
 
     # Create a session state variable to store the chat messages. This ensures that the
     # messages persist across reruns.
-    if "custom messages" not in st.session_state:
+    if "messages" not in st.session_state:
         st.session_state.messages = []
 
 mbti_options = ["INTJ", "INTP", "ENTJ", "ENTP",
@@ -51,7 +51,7 @@ if st.button("제출"):
         st.session_state.custom_messages.append({"role": "assistant", "content": bot_message})
 
 
-    if "custom_messages" in st.session_state and st.session_state.custom_messages:
+if "custom_messages" in st.session_state and st.session_state.custom_messages:
     st.markdown("### 💬 MBTI/혈액형 입력 대화")
     for msg in st.session_state.custom_messages:
         if msg["role"] == "user":
