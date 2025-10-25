@@ -25,12 +25,37 @@ else:
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+mbti_options = ["INTJ", "INTP", "ENTJ", "ENTP",
+                "INFJ", "INFP", "ENFJ", "ENFP",
+                "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+                "ISTP", "ISFP", "ESTP", "ESFP"]
+mbti = st.selectbox("💡 MBTI 선택:", mbti_options)
 
+# 🔹 혈액형 선택
+blood_options = ["A", "B", "AB", "O"]
+blood_type = st.selectbox("💡 혈액형 선택:", blood_options)
+
+# 🔹 전송 버튼
+if st.button("제출"):
+    user_input = f"내 MBTI는 {mbti}이고, 혈액형은 {blood_type}이야."
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    
 
     # Display the existing chat messages via `st.chat_message`.
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+
+
+st.markdown("### 💬 대화 내역")
+for msg in st.session_state.messages:
+    if msg["role"] == "user":
+        st.markdown(f"<div style='background-color:#F0F0F0; padding:10px; border-radius:10px; margin-bottom:5px;'>"
+                    f"🙂 사용자: {msg['content']}</div>", unsafe_allow_html=True)
+    else:
+        st.markdown(f"<div style='background-color:#A0C4FF; padding:10px; border-radius:10px; margin-bottom:5px;'>"
+                    f"🤖 챗봇: {msg['content']}</div>", unsafe_allow_html=True)
+    
 
     # Create a chat input field to allow the user to enter a message. This will display
     # automatically at the bottom of the page.
@@ -41,6 +66,15 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
+
+if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=st.session_state.messages
+    )
+    bot_message = response.choices[0].message["content"]
+    st.session_state.messages.append({"role": "assistant", "content": bot_message})
+        
         # Generate a response using the OpenAI API.
         stream = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -50,8 +84,6 @@ else:
             ],
             stream=True,
         )
-
-
 
         
         # Stream the response to the chat using `st.write_stream`, then store it in 
