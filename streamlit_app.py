@@ -47,15 +47,7 @@ if st.button("제출"):
             st.markdown(message["content"])
 
 
-st.markdown("### 💬 대화 내역")
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.markdown(f"<div style='background-color:#F0F0F0; padding:10px; border-radius:10px; margin-bottom:5px;'>"
-                    f"🙂 사용자: {msg['content']}</div>", unsafe_allow_html=True)
-    else:
-        st.markdown(f"<div style='background-color:#A0C4FF; padding:10px; border-radius:10px; margin-bottom:5px;'>"
-                    f"🤖 챗봇: {msg['content']}</div>", unsafe_allow_html=True)
-    
+
 
     # Create a chat input field to allow the user to enter a message. This will display
     # automatically at the bottom of the page.
