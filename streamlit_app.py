@@ -70,7 +70,16 @@ with col3:
             ],
             stream=True,
         )
-
+st.markdown("### 💬 대화 내역")
+for msg in st.session_state.messages:
+    if msg["role"] == "user":
+        st.markdown(f"<div style='background-color:#F0F0F0; padding:10px; border-radius:10px; margin-bottom:5px;'>"
+                    f"🙂 사용자: {msg['content']}</div>", unsafe_allow_html=True)
+    else:
+        style = tone_styles[tone]
+        st.markdown(f"<div style='background-color:{style['color']}; padding:10px; border-radius:10px; margin-bottom:5px;'>"
+                    f"{style['emoji']} 챗봇 ({tone} 톤): {msg['content']}</div>", unsafe_allow_html=True)
+        
 # =========================
 # 🔹 GPT 호출 시 톤 반영
 # =========================
